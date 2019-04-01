@@ -1,0 +1,65 @@
+{
+  "DEFAULT": {
+    "PORT": 9551,
+    "CTRL_IF_DIR":"/var/run/"
+  },
+ "METRICS_AP":[
+    {
+      "name":"num_sta[0]",
+      "type":"gauge", 
+      "help":"Number of active stations of the VAP"
+    },
+    {
+      "name":"channel",
+      "type":"gauge", 
+      "help":"Primary channel of the VAP"
+    },
+    {
+      "name":"freq",
+      "type":"gauge", 
+      "help":"Primary frequency of the VAP"
+    },
+    {
+      "name":"max_txpower",
+      "type":"counter", 
+      "help":"Max TX Power of the VAP"
+    }
+ ],
+ "METRICS_STA":[
+    {
+      "name":"signal",
+      "type":"gauge", 
+      "help":"signal in dbms of a station in a VAP"
+    },
+    {
+      "name":"rx_bytes",
+      "type":"counter", 
+      "help":"Received bytes from the STA to the VAP"     
+    },
+    {
+      "name":"tx_bytes",
+      "type":"counter", 
+      "help":"Transmitted bytes from the VAP to the STA"     
+    },
+    {
+      "name":"connected_time",
+      "type":"counter", 
+      "help":"Connected time in seconds of a STA in a VAP"     
+    },
+    {
+      "name":"inactive_msec",
+      "type":"gauge", 
+      "help":"inactive time in msecs of a STA in a VAP"     
+    },
+    {
+      "name":"rx_rate_info",
+      "type":"gauge", 
+      "help":"Link rate from the STA to the VAP in Mbps"     
+    },
+    {
+      "name":"tx_rate_info",
+      "type":"gauge", 
+      "help":"Link rate from the VAP to the STA in Mbps"     
+    }
+ ]
+}
