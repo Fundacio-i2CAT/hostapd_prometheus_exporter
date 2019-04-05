@@ -15,8 +15,8 @@
 - Expects a config.json file for configuration (an example is provided with the code):
     - DEFAULT: port (default 9551) and directory containing the hostapd ctrl ifaces (default '/var/run')
 
-    - METRICS_AP: metrics related to the status of the AP/VAP. For each metric, it expects a name (must be one of the obtained metrics when using the 'status' command in hostapd_cli), a type (gauge or counter) and a help/information string
+    - METRICS_AP: metrics related to the status of the AP/VAP. For each metric, it expects a name_hostapd (must be one of the obtained metrics when using the 'status' command in hostapd_cli), a name_prometheus (the one that will be exported to prometheus), a type (gauge or counter) and a help/information string
 
-    - METRICS_STA: metrics related to the stations connected to the AP/VAP. For each metric, it expects a name (must be one of the obtained metrics when using the 'all_sta' command in hostapd_cli), a type (gauge or counter) and a help/information string
+    - METRICS_STA: metrics related to the stations connected to the AP/VAP. For each metric, it expects a name_hostapd (must be one of the obtained metrics when using the 'all_sta' command in hostapd_cli), a name_prometheus (the one that will be exported to prometheus), a type (gauge or counter) and a help/information string
 
  - Copyright 2019 Miguel Catalan-Cid <miguel.catalan@i2cat.net>. See LICENSE for more details 

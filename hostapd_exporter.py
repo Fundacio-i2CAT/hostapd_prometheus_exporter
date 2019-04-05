@@ -13,7 +13,7 @@ import time
 import json
 import os
 
-VERSION = 1.0
+VERSION = 1.1
 DEFAULT_PORT = 9551
 
 metrics_ap = {}
@@ -21,11 +21,12 @@ metrics_sta = {}
 ctrl_dir = "/var/run/"
 
 def get_hostapd_vaps():
-	output = commands.getstatusoutput("ls -la "+ctrl_dir+ " | grep hostapd | awk '{ print $9 }'")
-	if not output[1]:
-		print 'VAPs are still not active'
-		return {}
-	return output[1].split('\n')
+	hostapd_vaps =[]
+	output = os.listdir(ctrl_dir)
+	for ha_iface in output:
+		if ("hostapd" in ha_iface):
+			hostapd_vaps.append(ha_iface)
+	return hostapd_vaps
 		
 def get_vap_stats(e):
 	vap_status = commands.getstatusoutput('hostapd_cli -p '+ctrl_dir+e+' status')[1].split('\n')
