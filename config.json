@@ -5,61 +5,66 @@
   },
  "METRICS_AP":[
     {
-      "name":"num_sta[0]",
+      "name_hostapd":"num_sta[0]",
+      "name_prometheus":"num_stations",
       "type":"gauge", 
       "help":"Number of active stations of the VAP"
     },
     {
-      "name":"channel",
+      "name_hostapd":"channel",
+      "name_prometheus":"channel",
       "type":"gauge", 
       "help":"Primary channel of the VAP"
     },
     {
-      "name":"freq",
+      "name_hostapd":"freq",
+      "name_prometheus":"freq_Hz",
       "type":"gauge", 
       "help":"Primary frequency of the VAP"
     },
     {
-      "name":"max_txpower",
-      "type":"counter", 
-      "help":"Max TX Power of the VAP"
+      "name_hostapd":"max_txpower",
+      "name_prometheus":"max_txpower_dBm",
+      "type":"gauge", 
+      "help":"Max TX Power of the VAP in dBms"
     }
  ],
  "METRICS_STA":[
     {
-      "name":"signal",
+      "name_hostapd":"signal",
+      "name_prometheus":"signal_dBm",
       "type":"gauge", 
       "help":"signal in dbms of a station in a VAP"
     },
     {
-      "name":"rx_bytes",
+      "name_hostapd":"rx_bytes",
+      "name_prometheus":"rx_bytes_total",
       "type":"counter", 
       "help":"Received bytes from the STA to the VAP"     
     },
     {
-      "name":"tx_bytes",
+      "name_hostapd":"tx_bytes",
+      "name_prometheus":"tx_bytes_total",
       "type":"counter", 
       "help":"Transmitted bytes from the VAP to the STA"     
     },
     {
-      "name":"connected_time",
+      "name_hostapd":"connected_time",
+      "name_prometheus":"connected_time_total",
       "type":"counter", 
       "help":"Connected time in seconds of a STA in a VAP"     
     },
     {
-      "name":"inactive_msec",
+      "name_hostapd":"rx_rate_info",
+      "name_prometheus":"rx_rate_bps",
       "type":"gauge", 
-      "help":"inactive time in msecs of a STA in a VAP"     
+      "help":"Link rate from the STA to the VAP in bps"     
     },
     {
-      "name":"rx_rate_info",
+      "name_hostapd":"tx_rate_info",
+      "name_prometheus":"tx_rate_bps",
       "type":"gauge", 
-      "help":"Link rate from the STA to the VAP in Mbps"     
-    },
-    {
-      "name":"tx_rate_info",
-      "type":"gauge", 
-      "help":"Link rate from the VAP to the STA in Mbps"     
+      "help":"Link rate from the VAP to the STA in bps"     
     }
  ]
 }

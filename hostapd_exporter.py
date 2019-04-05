@@ -74,10 +74,10 @@ class VAPCollector(object):
 					vap_label = 'NONE'
 				for metric in vap_stats.keys():
 					if (metric in metrics_ap):
-						if (metrics_ap[metric][0] == 'gauge'):
-							g = GaugeMetricFamily('hostapd_ap_'+metric.split('[',1)[0], metrics_ap[metric][1], labels=['id'])
+						if (metrics_ap[metric][1] == 'gauge'):
+							g = GaugeMetricFamily('hostapd_ap_'+metrics_ap[metric][0], metrics_ap[metric][2], labels=['id'])
 						else:
-							g = CounterMetricFamily('hostapd_ap_'+metric.split('[',1)[0], metrics_ap[metric][1], labels=['id'])
+							g = CounterMetricFamily('hostapd_ap_'+metrics_ap[metric][0], metrics_ap[metric][2], labels=['id'])
 						g.add_metric([vap_label], int(vap_stats[metric]))
 						yield g
 
@@ -96,21 +96,26 @@ class STACollector(object):
 					sta_label = str(sta['mac_sta'])
 					for metric in sta.keys():
 						if (metric in metrics_sta):
-							if (metrics_sta[metric][0] == 'gauge'):
-								g = GaugeMetricFamily('hostapd_sta_'+metric.split('[',1)[0], metrics_sta[metric][1], labels=['id', 'mac_sta'])
+							if (metrics_sta[metric][1] == 'gauge'):
+								g = GaugeMetricFamily('hostapd_sta_'+metrics_sta[metric][0], metrics_sta[metric][2], labels=['id', 'mac_sta'])
 							else:
-								g = CounterMetricFamily('hostapd_sta_'+metric.split('[',1)[0], metrics_sta[metric][1], labels=['id', 'mac_sta'])
-							g.add_metric([vap_label, sta_label], int(sta[metric]))
+								g = CounterMetricFamily('hostapd_sta_'+metrics_sta[metric][0],metrics_sta[metric][2], labels=['id', 'mac_sta'])
+							if (metric == "tx_rate_info" or metric == "rx_rate_info"):
+								#convert the value to bps
+								g.add_metric([vap_label, sta_label], int(sta[metric])*1e5)
+							else:
+								g.add_metric([vap_label, sta_label], int(sta[metric]))
 							yield g
 
 def parse_metrics(metrics_config):
 	metrics = {}
 	for m in metrics_config:
 		try:
-			mname = m["name"]
+			mname = m['name_hostapd']
+			pname = m['name_prometheus']
 			mtype = m['type']
 			mhelp = m['help']
-			metrics[mname] = [mtype, mhelp]
+			metrics[mname] = [pname, mtype, mhelp]
 		except:
 			print "\nError: Please provide a correct metric definition including name, type and help", m
 			exit(-1)
