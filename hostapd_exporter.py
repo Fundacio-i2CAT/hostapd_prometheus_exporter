@@ -1,6 +1,6 @@
 '''
 hostapd_exporter.py 
-Copyright 2019 Miguel Catalan-Cid <miguel.catalan@i2cat.net>
+Copyright 2019 Fundació Privada I2CAT, Internet i Innovació digital a Catalunya.
 
 See LICENSE for more details 
 '''

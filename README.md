@@ -19,5 +19,5 @@
 
     - METRICS_STA: metrics related to the stations connected to the AP/VAP. For each metric, it expects a name_hostapd (must be one of the obtained metrics when using the 'all_sta' command in hostapd_cli), a name_prometheus (the one that will be exported to prometheus), a type (gauge or counter) and a help/information string
 
- - Copyright 2019 Fundacio i2CAT <www.i2cat.net>, Miguel Catalan-Cid 
-<miguel.catalan@i2cat.net>. See LICENSE for more details 
+- Author: Miguel Catalan-Cid <miguel.catalan@i2cat.net>
+- Copyright 2019 Fundació Privada I2CAT, Internet i Innovació digital a Catalunya. See LICENSE for more details.
