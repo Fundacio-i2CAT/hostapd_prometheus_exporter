@@ -1,8 +1,8 @@
 '''
-hostapd_exporter.py 
-Copyright 2019 Fundacio Privada I2CAT, Internet i Innovacio digital a Catalunya
+hostapd_exporter.py
+Copyright 2019 Fundacio Privada I2CAT, Internet i Innovacio digital a Catalunya.
 
-See LICENSE for more details 
+See LICENSE for more details
 '''
 
 from prometheus_client.core import GaugeMetricFamily, CounterMetricFamily, REGISTRY
@@ -13,7 +13,7 @@ import json
 import os
 import subprocess as sp
 
-VERSION = 1.1
+VERSION = 1.2
 DEFAULT_PORT = 9551
 
 metrics_ap = {}
