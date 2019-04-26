@@ -1,6 +1,6 @@
 '''
 hostapd_exporter.py 
-Copyright 2019 Fundació Privada I2CAT, Internet i Innovació digital a Catalunya.
+Copyright 2019 Fundacio Privada I2CAT, Internet i Innovacio digital a Catalunya
 
 See LICENSE for more details 
 '''
@@ -8,10 +8,10 @@ See LICENSE for more details
 from prometheus_client.core import GaugeMetricFamily, CounterMetricFamily, REGISTRY
 import prometheus_client as prometheus
 import sys
-import commands
 import time
 import json
 import os
+import subprocess as sp
 
 VERSION = 1.1
 DEFAULT_PORT = 9551
@@ -29,7 +29,7 @@ def get_hostapd_vaps():
 	return hostapd_vaps
 		
 def get_vap_stats(e):
-	vap_status = commands.getstatusoutput('hostapd_cli -p '+ctrl_dir+e+' status')[1].split('\n')
+	vap_status = sp.check_output('hostapd_cli -p '+ctrl_dir+e+' status', universal_newlines=True, shell=True).split('\n')
 	vap_stats = {}
 	#Remove first entry - 'Selected interface ...'
 	vap_status.pop(0)
@@ -41,7 +41,7 @@ def get_vap_stats(e):
 	return vap_stats		
 
 def get_sta_stats(e):
-	all_sta = commands.getstatusoutput('hostapd_cli -p '+ctrl_dir+e+' all_sta')[1].split('\n')
+	all_sta = sp.check_output('hostapd_cli -p '+ctrl_dir+e+' all_sta', universal_newlines=True, shell=True).split('\n')
 	all_sta_stats = []
 	sta_stats = {}
 	#Remove first entry - 'Selected interface ...'
@@ -118,11 +118,11 @@ def parse_metrics(metrics_config):
 			mhelp = m['help']
 			metrics[mname] = [pname, mtype, mhelp]
 		except:
-			print "\nError: Please provide a correct metric definition including name, type and help", m
+			print("\nError: Please provide a correct metric definition including name, type and help", m)
 			exit(-1)
 		else:
 			if (mtype != 'gauge' and mtype != 'counter'):
-				print "\nError: Only gauge and counter are supported", m
+				print ("\nError: Only gauge and counter are supported", m)
 				exit(-1)
 	return metrics
 
@@ -132,14 +132,14 @@ def main():
 	global ctrl_dir
 
 	metrics_found = 0
-	print "Hostapd exporter - Version "  + str(VERSION)
+	print ("Hostapd exporter - Version " , str(VERSION))
 
 	#Read config file
 	try:
 		with open('config.json', 'r') as f:
 			config = json.load(f)
 	except Exception as e:
-		print "Exception while opening the config.json file: ", e
+		print ("Exception while opening the config.json file: ", e)
 		exit(-1)
 	
 	#Read default port
@@ -155,34 +155,34 @@ def main():
 		pass
 
 	if not os.path.isdir(ctrl_dir):
-		print "Please, provide a valid directory to find hostapd ctrl ifaces"
+		print ("Please, provide a valid directory to find hostapd ctrl ifaces")
 		exit(-1)
 
 	#Read metrics
 	try:
 		metrics_ap = parse_metrics(config['METRICS_AP'])
 	except:
-		print "No metrics regarding the APs have been provided"
+		print ("No metrics regarding the APs have been provided")
 	else:	
 		metrics_found = 1
 
 	try:
 		metrics_sta = parse_metrics(config['METRICS_STA'])
 	except:
-		print "No metrics regarding the STAs have been provided"
+		print ("No metrics regarding the STAs have been provided")
 	else:	
 		metrics_found = 1
 
 	#at least one metric should be present
 	if not metrics_found:
-		print "Please, provide at least one metric"
+		print ("Please, provide at least one metric")
 		exit(-1)
 
 	REGISTRY.register(VAPCollector())
 	REGISTRY.register(STACollector())	
 	prometheus.start_http_server(port)
 
-	print "Prometheus http server started on port", port
+	print ("Prometheus http server started on port", port)
 
 	while True:
 		time.sleep(100)
