@@ -103,7 +103,7 @@ class STACollector(object):
 								g = CounterMetricFamily('hostapd_sta_'+metrics_sta[metric][0],metrics_sta[metric][2], labels=['id', 'mac_sta'])
 							if (metric == "tx_rate_info" or metric == "rx_rate_info"):
 								#convert the value to bps
-								g.add_metric([vap_label, sta_label], int(sta[metric])*1e5)
+								g.add_metric([vap_label, sta_label], int(sta[metric]).split(' ',1)[0]*1e5)
 							else:
 								g.add_metric([vap_label, sta_label], int(sta[metric]))
 							yield g
