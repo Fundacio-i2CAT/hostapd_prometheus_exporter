@@ -135,12 +135,20 @@ def main():
 	print ("Hostapd exporter - Version " , str(VERSION))
 
 	#Read config file
-	try:
-		with open('config.json', 'r') as f:
-			config = json.load(f)
-	except Exception as e:
-		print ("Exception while opening the config.json file: ", e)
-		exit(-1)
+	if (len(sys.argv) > 1):
+		try:
+			with open(sys.argv[1], 'r') as f:
+				config = json.load(f)
+		except Exception as e:
+			print ("Exception while opening the config.json file: Add it to the directory or use its location as an argument")
+			exit(-1)
+	else:	
+		try:
+			with open('config.json', 'r') as f:
+				config = json.load(f)
+		except Exception as e:
+			print ("Exception while opening the config.json file: Add it to the directory or use its location as an argument")
+			exit(-1)
 	
 	#Read default port
 	try:
