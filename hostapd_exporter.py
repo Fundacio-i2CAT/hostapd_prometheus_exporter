@@ -32,7 +32,8 @@ def get_vap_stats(e):
 	vap_status = sp.check_output('hostapd_cli -p '+ctrl_dir+e+' status', universal_newlines=True, shell=True).split('\n')
 	vap_stats = {}
 	#Remove first entry - 'Selected interface ...'
-	vap_status.pop(0)
+	if "Selected" in vap_status[0]:
+		vap_status.pop(0)
 
 	for st in vap_status:
 		entry = st.split('=')
@@ -45,7 +46,8 @@ def get_sta_stats(e):
 	all_sta_stats = []
 	sta_stats = {}
 	#Remove first entry - 'Selected interface ...'
-	all_sta.pop(0)
+	if "Selected" in all_sta[0]:
+		all_sta.pop(0)
 
 	num_stas = 0
 	for st in all_sta:
