@@ -8,3 +8,6 @@
 
 #### V1.2 - 20190426
 - Compatible with python3
+
+#### V1.3 - 20190705
+- Minor fix to avoid error if hostapd ctrl iface was created but didn't work

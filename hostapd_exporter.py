@@ -13,7 +13,7 @@ import json
 import os
 import subprocess as sp
 
-VERSION = 1.2
+VERSION = 1.3
 DEFAULT_PORT = 9551
 
 metrics_ap = {}
@@ -29,8 +29,12 @@ def get_hostapd_vaps():
 	return hostapd_vaps
 		
 def get_vap_stats(e):
-	vap_status = sp.check_output('hostapd_cli -p '+ctrl_dir+e+' status', universal_newlines=True, shell=True).split('\n')
 	vap_stats = {}
+	try:
+		vap_status = sp.check_output('hostapd_cli -p '+ctrl_dir+e+' status', universal_newlines=True, shell=True).split('\n')
+	except Exception as e:
+		print("get_vap_stats error", e)
+		return vap_stats
 	#Remove first entry - 'Selected interface ...'
 	if "Selected" in vap_status[0]:
 		vap_status.pop(0)
@@ -42,14 +46,19 @@ def get_vap_stats(e):
 	return vap_stats		
 
 def get_sta_stats(e):
-	all_sta = sp.check_output('hostapd_cli -p '+ctrl_dir+e+' all_sta', universal_newlines=True, shell=True).split('\n')
 	all_sta_stats = []
 	sta_stats = {}
+	num_stas = 0
+	try:
+		all_sta = sp.check_output('hostapd_cli -p '+ctrl_dir+e+' all_sta', universal_newlines=True, shell=True).split('\n')
+	except Exception as e:
+		print("get_sta_stats error", e)
+		return all_sta_stats, num_stas
+
 	#Remove first entry - 'Selected interface ...'
 	if "Selected" in all_sta[0]:
 		all_sta.pop(0)
 
-	num_stas = 0
 	for st in all_sta:
 		entry = st.split('=')
 		if (len(entry) > 1):
