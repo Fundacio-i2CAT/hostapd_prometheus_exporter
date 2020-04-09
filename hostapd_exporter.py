@@ -145,6 +145,7 @@ def main():
 	metrics_found = 0
 	print ("Hostapd exporter - Version " , str(VERSION))
 
+        os.chdir(os.path.dirname(os.path.abspath(__file__)))
 	#Read config file
 	if (len(sys.argv) > 1):
 		try:
