@@ -11,3 +11,6 @@
 
 #### V1.3 - 20190705
 - Minor fix to avoid error if hostapd ctrl iface was created but didn't work
+
+#### V1.4 - 20200521
+- Minor fix to find config.json in a proper way

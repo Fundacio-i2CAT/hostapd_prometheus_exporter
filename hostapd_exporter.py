@@ -13,7 +13,7 @@ import json
 import os
 import subprocess as sp
 
-VERSION = 1.3
+VERSION = 1.4
 DEFAULT_PORT = 9551
 
 metrics_ap = {}
