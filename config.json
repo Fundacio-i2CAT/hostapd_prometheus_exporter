@@ -65,6 +65,18 @@
       "name_prometheus":"tx_rate_bps",
       "type":"gauge", 
       "help":"Link rate from the VAP to the STA in bps"     
-    }
- ]
+    },
+    {
+      "name_hostapd":"total_airtime",
+      "name_prometheus":"total_airtime",
+      "type":"gauge",
+      "help":"Total airtime consumed by a STA"
+    },
+    {
+      "name_hostapd":"backlog_bytes",
+      "name_prometheus":"backlog_bytes_total",
+      "type":"counter",
+      "help":"Backlogged packets"
+    } 
+   ]
 }
